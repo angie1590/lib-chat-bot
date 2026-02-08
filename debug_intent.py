@@ -42,12 +42,12 @@ for w in [first_word, second_word]:
     has_internal_capital = any(c.isupper() for c in w[1:]) if len(w) > 1 else False
     has_accent = any(c in w for c in "áéíóúñüü")
     is_short_name = len(w) < 6
-    
+
     print(f"Word '{w}':")
     print(f"  has_internal_capital: {has_internal_capital}")
     print(f"  has_accent: {has_accent}")
     print(f"  is_short_name: {is_short_name}")
-    
+
     if has_accent or has_internal_capital or is_short_name:
         all_formal = False
 

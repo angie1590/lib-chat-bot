@@ -52,7 +52,7 @@ if intent == "author" and not matching_books:
 | "García maquez" | GARCIA MARQUEZ, GABRIEL (5 obras en orden 1-5) |
 | "rowlin" | ROWLING, J.K. (Harry Potter series) |
 | "jk rowlin" | ROWLING, J.K. (libros 1, 2, 3 en orden) |
-| "9781567182811" | ∅ (ISBN correcto - no existe) |
+| "9781567182811" | ✅ SECRETOS PERDIDOS DE LA ORACION | FINLEY, GUY (Score: 351) |
 | "Ensayos breves para la relijion" | "ENSAYOS BREVES SOBRE LA RELIGION" (typo "relijion") |
 
 ### Casos que se arreglaron ✅
@@ -88,7 +88,7 @@ if intent == "author" and not matching_books:
 
 El sistema ahora maneja correctamente:
 - ✅ Nombres en minúsculas ("isabella" → ISABEL)
-- ✅ Nombres invertidos ("Ayende, isabella")  
+- ✅ Nombres invertidos ("Ayende, isabella")
 - ✅ Typos pequeños ("ayende" → "allende")
 - ✅ Typos grandes ("fucol" → "foucault", con fallback)
 - ✅ Series de libros ordenados correctamente

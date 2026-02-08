@@ -18,6 +18,7 @@ for idx, row in df.iterrows():
     title = row['TITULO'] if pd.notna(row['TITULO']) else ''
     author = row['AUTOR'] if pd.notna(row['AUTOR']) else None
     publisher = row['EDITORIAL'] if pd.notna(row['EDITORIAL']) else None
+    isbn = row['ISBN'] if pd.notna(row['ISBN']) else None
     if not title:
         continue
     book = Book(
@@ -25,6 +26,7 @@ for idx, row in df.iterrows():
         title=str(title),
         author=str(author) if author else None,
         publisher=str(publisher) if publisher else None,
+        isbn=str(isbn) if isbn else None,
         stock=int(row['Existencia']) if pd.notna(row['Existencia']) else 0,
     )
     books_data.append(book)
@@ -54,8 +56,14 @@ for query in test_queries:
     for book in books_data:
         title_lower = (book.title or '').lower()
         author_lower = (book.author or '').lower()
+        isbn_clean = (book.isbn or '').replace('-', '').replace(' ', '')
 
-        if intent == "author":
+        if intent == "isbn":
+            # ISBN search: exact match only
+            query_clean = query.replace('-', '').replace(' ', '')
+            if isbn_clean == query_clean:
+                matching_books.append(book)
+        elif intent == "author":
             author_score = fuzzy_score_author(query, book.author or "", threshold=75)
             if author_score >= 75:
                 matching_books.append(book)

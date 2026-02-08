@@ -45,7 +45,7 @@ def fuzzy_score_author(query: str, author: str, threshold: float = 75) -> int:
     """
     Fuzzy score especializado para búsquedas de autor.
     Prioriza coincidencias de múltiples palabras (apellidos).
-    
+
     Args:
         query: Query del usuario
         author: Nombre del autor
