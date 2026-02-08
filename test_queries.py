@@ -40,6 +40,8 @@ test_queries = [
     'jk rowlin',
     'isabella Ayende',
     '9781567182811',
+    '9786287641969',
+    '9786287641890',
     'Ensayos breves para la relijion',
     'FUCOL, MICHEL',
 ]
