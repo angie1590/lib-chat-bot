@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "lib-chat-bot"
+version = "0.1.0"
+description = "Chatbot con IA generativa para SODILIBRO"
+authors = ["Andrea Peralta <andreacpb90@hotmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+packages = [{ include = "lib_chat_bot", from = "src" }]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<4.0"
+httpx = "^0.28.1"
+pydantic = "^2.12.5"
+rapidfuzz = "^3.14.3"
+python-levenshtein = "^0.27.3"
+pandas = "^2.0"
+openpyxl = "^3.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+
+[build-system]
+requires = ["poetry-core>=1.9.0"]
+build-backend = "poetry.core.masonry.api"
