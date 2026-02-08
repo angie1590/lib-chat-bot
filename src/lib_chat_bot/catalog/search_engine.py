@@ -110,6 +110,50 @@ def fuzzy_score_author(query: str, author: str, threshold: float = 75) -> int:
     return 0
 
 
+def fuzzy_score_title(query: str, title: str, threshold: float = 70) -> int:
+    """
+    Fuzzy score para búsquedas de título.
+    Busca coincidencias de palabras con typos permitidos.
+    
+    Args:
+        query: Query del usuario
+        title: Título del libro
+        threshold: Threshold de fuzzy matching por palabra (default 70, más tolerante que autores)
+    """
+    if not query or not title:
+        return 0
+
+    query_norm = normalize(query)
+    title_norm = normalize(title)
+
+    query_words = [w for w in query_norm.split() if len(w) > 2]
+    title_words = [w for w in title_norm.split() if len(w) > 2]
+
+    if not query_words or not title_words:
+        return 0
+
+    # Buscar mejor match para cada palabra de la query
+    matched_count = 0
+    total_score = 0
+    
+    for qw in query_words:
+        best = 0
+        for tw in title_words:
+            score = ratio(qw, tw)
+            if score > best:
+                best = score
+        if best >= threshold:
+            matched_count += 1
+            total_score += best
+
+    # Si al menos 50% de las palabras matchean, retornar score
+    if matched_count >= len(query_words) * 0.5:
+        avg_score = total_score / matched_count if matched_count > 0 else 0
+        return int(avg_score)
+
+    return 0
+
+
 def fuzzy_score(a: str, b: str) -> int:
     if not a or not b:
         return 0

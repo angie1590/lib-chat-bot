@@ -26,7 +26,25 @@ def detect_query_intent(query: str) -> QueryIntent:
     if re.match(r'^\d{10}(?:\d{3})?$', query_normalized.replace('-', '').replace(' ', '')):
         return "isbn"
 
-    # 2️⃣ Detectar patrón de autor
+    # 2️⃣ Detectar patrones conversacionales que implican búsqueda de autor
+    # "libros de García Márquez", "obras de [AUTOR]", "escritos por [AUTOR]", etc.
+    if re.search(r'\b(libros|obras|libreta|libros|escritos)\s+(de|por|del)\s+[A-ZÁÉÍÓÚ]', query):
+        # Extraer todo después de "de" o "por"
+        match = re.search(r'\b(de|por|del|con)\s+(.+)$', query_normalized)
+        if match:
+            potential_author = match.group(2).strip()
+            # Si lo extraído tiene palabras con mayúsculas (nombres propios)
+            author_words = query.split()
+            for i, word in enumerate(author_words):
+                if word.lower() in ['de', 'por', 'del'] and i + 1 < len(author_words):
+                    remaining_words = author_words[i+1:]
+                    # Si quedan 1-3 palabras con mayúsculas, probablemente es un autor
+                    if 1 <= len(remaining_words) <= 3:
+                        proper_words = sum(1 for w in remaining_words if len(w) > 0 and w[0].isupper())
+                        if proper_words >= 1:
+                            return "author"
+
+    # 3️⃣ Detectar patrón de autor
     words = query.split()
     word_count = len(words)
 
