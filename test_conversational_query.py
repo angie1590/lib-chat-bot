@@ -44,7 +44,7 @@ print(f"Palabras de búsqueda: {query_words}\n")
 for book in books_data:
     title_lower = (book.title or '').lower()
     author_lower = (book.author or '').lower()
-    
+
     # Buscar palabras > 2 caracteres en título o autor
     for word in query_words:
         if len(word) > 2 and (word in title_lower or word in author_lower):

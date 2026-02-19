@@ -114,7 +114,7 @@ def fuzzy_score_title(query: str, title: str, threshold: float = 70) -> int:
     """
     Fuzzy score para búsquedas de título.
     Busca coincidencias de palabras con typos permitidos.
-    
+
     Args:
         query: Query del usuario
         title: Título del libro
@@ -135,7 +135,7 @@ def fuzzy_score_title(query: str, title: str, threshold: float = 70) -> int:
     # Buscar mejor match para cada palabra de la query
     matched_count = 0
     total_score = 0
-    
+
     for qw in query_words:
         best = 0
         for tw in title_words:

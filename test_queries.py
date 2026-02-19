@@ -22,7 +22,7 @@ def normalize_query(query: str) -> str:
             if author.endswith(word):
                 author = author[:-len(word)].strip()
         return author
-    
+
     # Patrón alternativo: palabras mayúsculas después de "de" o "por" (García Márquez)
     # Útil para "quiero libros que hablen de García Márquez"
     match = re.search(r'\b(?:de|por|del|about)\s+([A-ZÁÉÍÓÚ][a-záéíóú]+(?:\s+[A-ZÁÉÍÓÚ][a-záéíóú]+)*)', query)
@@ -31,7 +31,7 @@ def normalize_query(query: str) -> str:
         # Solo retornar si tiene mayúsculas (es un nombre propio)
         if any(c.isupper() for c in author):
             return author
-    
+
     return query
 
 # Cargar datos
@@ -84,7 +84,7 @@ for query in test_queries:
     if normalized_query != query:
         print(f'  (Normalizada a: {normalized_query})')
         print()
-    
+
     intent = detect_query_intent(normalized_query)
     query_words = set(normalized_query.lower().split())
     matching_books = []
@@ -111,7 +111,7 @@ for query in test_queries:
                     matching_books.append(book)
                     exact_match = True
                     break
-            
+
             # Fallback: fuzzy match on title if no exact word match
             if not exact_match:
                 title_score = fuzzy_score_title(normalized_query, book.title or "", threshold=70)

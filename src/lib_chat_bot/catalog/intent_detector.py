@@ -61,6 +61,17 @@ def detect_query_intent(query: str) -> QueryIntent:
         if len(last_word) > 2 and last_word.isupper():
             return "author"
 
+        # PATRÓN ESPECIAL: Si ambas palabras están en lowercase, es casi seguro un título
+        # "harry potter", "el hobbit", "don quijote"
+        # (Los nombres de personas tienen inicial capital o acentos/mayúsculas internas)
+        if word_count == 2:
+            first_word = words[0]
+            second_word = words[1]
+            both_lowercase = (len(first_word) > 0 and first_word[0].islower()) and \
+                             (len(second_word) > 0 and second_word[0].islower())
+            if both_lowercase:
+                return "title"
+
         # Descartar si todas las palabras son palabras clave de título comunes
         has_title_keyword = any(w.lower() in title_words for w in words)
 

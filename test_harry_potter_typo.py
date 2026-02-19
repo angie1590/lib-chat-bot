@@ -43,7 +43,7 @@ print(f"Palabras: {query_words}\n")
 for book in books_data:
     title_lower = (book.title or '').lower()
     author_lower = (book.author or '').lower()
-    
+
     for word in query_words:
         if len(word) > 2 and (word in title_lower or word in author_lower):
             matching_books.append(book)

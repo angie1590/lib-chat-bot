@@ -38,18 +38,18 @@ test_isbns = ['9786287641969', '9786287641890']
 for isbn_query in test_isbns:
     print(f"Buscando ISBN: {isbn_query}")
     print("=" * 60)
-    
+
     intent = detect_query_intent(isbn_query)
     matching_books = []
-    
+
     for book in books_data:
         isbn_clean = (book.isbn or '').replace('-', '').replace(' ', '')
         query_clean = isbn_query.replace('-', '').replace(' ', '')
-        
+
         if intent == "isbn":
             if isbn_clean == query_clean:
                 matching_books.append(book)
-    
+
     if matching_books:
         ranked = rerank_books(matching_books, isbn_query)
         for i, book in enumerate(ranked[:5], 1):
@@ -57,5 +57,5 @@ for isbn_query in test_isbns:
             print(f"{i}. {book.title} | Autor: {book.author} | Score: {score}")
     else:
         print("   No se encontraron resultados")
-    
+
     print()
